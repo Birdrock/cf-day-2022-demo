@@ -15,12 +15,14 @@ ${SCRIPT_DIR}/deploy-korifi.sh kind
 
 echo "**************************************"
 echo "Targeting Korifi..."
+# echo "cf api https://localhost"
 echo "**************************************"
 read -p "Press ENTER to continue..."
 cf api https://localhost --skip-ssl-validation
 
 echo "**************************************"
 echo "Login to Korifi..."
+# echo "cf login"
 echo "**************************************"
 read -p "Press ENTER to continue..."
 cf login
@@ -52,7 +54,7 @@ kubectl apply -f ${ROOT_DIR}/spring-music-db/service.yaml
 # Note - credentials here are an example and not used in any non-local instance
 echo "**************************************"
 echo "Creating User Provided Service Instance..."
-echo "cf cf create-user-provided-service spring-music-db -p '{\"uri\":\"mysql://user:pass@spring-music-db.default.svc.cluster.local:3306/default\"}'"
+echo "cf create-user-provided-service spring-music-db -p '{\"uri\":\"mysql://user:pass@spring-music-db.default.svc.cluster.local:3306/default\"}'"
 echo "**************************************"
 read -p "Press ENTER to continue..."
 cf cups spring-music-db -p '{"uri":"mysql://user:pass@spring-music-db.default.svc.cluster.local:3306/default"}'
@@ -64,11 +66,16 @@ read -p "Press ENTER to continue..."
 cf bind-service spring-music spring-music-db
 
 echo "**************************************"
-echo "Restaging spring-music..."
+echo "Restarting spring-music..."
 echo "**************************************"
 read -p "Press ENTER to continue..."
-cf restage spring-music
+cf restart spring-music
 
 echo "**************************************"
 echo "Changes now persist!" 
 echo "**************************************"
+
+echo "**************************************"
+echo "cf logs also works!" 
+echo "**************************************"
+cf logs spring-music --recent
