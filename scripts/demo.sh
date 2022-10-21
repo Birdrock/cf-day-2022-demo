@@ -74,8 +74,10 @@ cf restart spring-music
 echo "**************************************"
 echo "Changes now persist!" 
 echo "**************************************"
+read -p "Press ENTER to continue..."
 
 echo "**************************************"
 echo "cf logs also works!" 
 echo "**************************************"
+read -p "Press ENTER to continue..."
 cf logs spring-music --recent
